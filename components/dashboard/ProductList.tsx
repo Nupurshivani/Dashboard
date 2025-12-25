@@ -18,42 +18,10 @@ import {
 const initialProducts = [
   {
     id: 1,
-    name: 'Apple iPhone 15 Pro Max',
-    price: '$1,199.00',
-    stock: 45,
-    sold: 289,
-    active: true,
-  },
-  {
-    id: 2,
-    name: 'Sony WH-1000XM5 Headphones',
-    price: '$399.99',
-    stock: 78,
-    sold: 456,
-    active: true,
-  },
-  {
-    id: 3,
-    name: 'MacBook Air M3 13-inch',
-    price: '$1,299.00',
-    stock: 12,
-    sold: 167,
-    active: true,
-  },
-  {
-    id: 4,
-    name: 'Samsung Galaxy Watch 6',
-    price: '$349.99',
-    stock: 8,
-    sold: 94,
-    active: false,
-  },
-  {
-    id: 5,
-    name: 'Logitech MX Master 3S Mouse',
-    price: '$99.99',
-    stock: 156,
-    sold: 823,
+    name: 'Rompl Backtracking',
+    price: '$119.99',
+    stock: 25,
+    sold: 320,
     active: true,
   },
 ];
@@ -75,91 +43,84 @@ export default function ProductList() {
   };
 
   return (
-    <Card className="h-full">
-      <CardHeader className="border-b border-gray-100 pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <p className="text-[10px] lg:text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-              PRODUCT LIST
-            </p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl lg:text-3xl font-bold text-gray-900">{filteredProducts.length}</span>
-              {searchQuery && (
-                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-gray-50 text-gray-600">
-                  of {products.length}
-                </span>
-              )}
+    <Card className="h-full bg-gray-50/50 border-gray-200">
+      <CardContent className="p-4 space-y-3">
+        {/* First Inner Box - Header Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-3 space-y-3">
+          {/* Product List Title Section */}
+          <div className="bg-gray-50 rounded-lg border border-gray-200 p-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                  PRODUCT LIST
+                </p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-xl font-bold text-gray-900">390</span>
+                  <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-gray-200 text-gray-600">
+                    +12
+                  </span>
+                </div>
+              </div>
+              <Button variant="outline" size="icon" className="h-8 w-8 hover:bg-white border-gray-300">
+                <RefreshCw className="h-3.5 w-3.5" />
+              </Button>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" className="h-9 w-9 hover:bg-gray-50">
-              <RefreshCw className="h-4 w-4" />
-            </Button>
+
+          {/* Search Bar Section */}
+          <div className="bg-gray-50 rounded-lg border border-gray-200 p-3">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+              <Input
+                placeholder="Search product..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-8 h-8 bg-white border-gray-300 text-xs"
+              />
+            </div>
           </div>
         </div>
-        <div className="relative mt-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Search product..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-9 bg-gray-50 border-gray-200 text-sm"
-          />
-        </div>
-      </CardHeader>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-gray-50 hover:bg-gray-50">
-                <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Product Info</TableHead>
-                <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Price</TableHead>
-                <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Stock</TableHead>
-                <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Sold</TableHead>
-                <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm text-center">Active</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredProducts.map((product) => (
-                <TableRow key={product.id} className="hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
-                  <TableCell className="py-3 lg:py-4">
-                    <div className="flex items-center gap-2 lg:gap-3">
-                      <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center flex-shrink-0">
-                        <Package className="h-4 w-4 lg:h-5 lg:w-5 text-gray-400" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-semibold text-gray-900 text-xs lg:text-sm truncate">{product.name}</p>
-                        <p className="text-[10px] lg:text-xs text-gray-500">ID: #{product.id.toString().padStart(3, '0')}</p>
-                      </div>
+
+        {/* Second Inner Box - Table Section */}
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          {/* Table Headers Section */}
+          <div className="bg-gray-50 border-b border-gray-200 px-3 py-2">
+            <div className="grid grid-cols-5 gap-4">
+              <div className="font-medium text-gray-500 text-xs">Product Info</div>
+              <div className="font-medium text-gray-500 text-xs">Price</div>
+              <div className="font-medium text-gray-500 text-xs">Stock</div>
+              <div className="font-medium text-gray-500 text-xs">Sold</div>
+              <div className="font-medium text-gray-500 text-xs text-center">Active</div>
+            </div>
+          </div>
+
+          {/* Table Data Section */}
+          <div className="bg-white">
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50/50 transition-colors px-3 py-2.5">
+                <div className="grid grid-cols-5 gap-4 items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded bg-gray-100 flex items-center justify-center flex-shrink-0">
+                      <Package className="h-3 w-3 text-gray-400" />
                     </div>
-                  </TableCell>
-                  <TableCell className="font-bold text-gray-900 text-xs lg:text-sm">{product.price}</TableCell>
-                  <TableCell>
-                    <span
-                      className={`inline-flex px-2 lg:px-2.5 py-1 rounded-full text-[10px] lg:text-xs font-semibold ${
-                        product.stock > 50
-                          ? 'bg-green-50 text-green-700'
-                          : product.stock > 20
-                          ? 'bg-yellow-50 text-yellow-700'
-                          : 'bg-red-50 text-red-700'
-                      }`}
-                    >
-                      {product.stock}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-gray-700 font-semibold text-xs lg:text-sm">{product.sold}</TableCell>
-                  <TableCell className="text-center">
-                    <div className="flex justify-center">
-                      <Switch 
-                        checked={product.active} 
-                        onCheckedChange={() => handleToggle(product.id)}
-                      />
+                    <div className="min-w-0">
+                      <p className="font-medium text-gray-700 text-xs truncate">{product.name}</p>
                     </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                  </div>
+                  <div className="font-medium text-gray-900 text-xs">{product.price}</div>
+                  <div className="text-gray-600 text-xs">{product.stock}</div>
+                  <div className="text-gray-600 text-xs">{product.sold}</div>
+                  <div className="flex justify-center">
+                    <Switch 
+                      checked={product.active} 
+                      onCheckedChange={() => handleToggle(product.id)}
+                      className="scale-75"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </CardContent>
     </Card>
