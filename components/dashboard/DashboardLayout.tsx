@@ -22,6 +22,18 @@ import {
   Menu,
   User,
   ArrowRight,
+  Home,
+  ClipboardList,
+  Box,
+  TrendingUp,
+  Speaker,
+  ShoppingBag,
+  Grid3x3,
+  LayoutGrid,
+  Ticket,
+  RefreshCw,
+  Download,
+  Calendar,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -39,20 +51,27 @@ import {
 } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
-  { icon: ShoppingCart, label: 'Orders', href: '/orders' },
-  { icon: Package, label: 'Products', href: '/products' },
+  { icon: Home, label: 'Dashboard', href: '/dashboard' },
+  { icon: ShoppingBag, label: 'Orders', href: '/orders' },
+  { icon: Box, label: 'Products', href: '/products' },
   { icon: Users, label: 'Customers', href: '/customers' },
   { icon: BarChart3, label: 'Analytics', href: '/sales' },
   { icon: Megaphone, label: 'Marketing', href: '/marketing' },
 ];
 
 const salesChannelItems = [
-  { icon: Puzzle, label: 'Integrations', href: '/integrations' },
+  { icon: LayoutGrid, label: 'Integrations', href: '/integrations' },
   { icon: Store, label: 'My Store', href: '/store' },
-  { icon: Tag, label: 'Discounts', href: '/discounts' },
+  { icon: Ticket, label: 'Discounts', href: '/discounts' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -253,23 +272,26 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-          <div className="flex items-center justify-between px-4 lg:px-6 py-3.5 lg:py-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden h-9 w-9"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
+          {/* First Row: Dashboard title and user controls */}
+          <div className="flex items-center justify-between px-4 lg:px-6 py-3 border-b border-gray-100">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden h-9 w-9"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
 
-            <div className="flex-1" />
+              <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+            </div>
 
             <div className="flex items-center gap-2 lg:gap-3">
               {/* Messages Popover */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-gray-100">
+                  <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-gray-100 border border-gray-200 rounded-md bg-white">
                     <Mail className="h-5 w-5 text-gray-600" />
                     <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-blue-600 hover:bg-blue-600 text-[10px]">
                       3
@@ -355,7 +377,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               {/* Notifications Popover */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-gray-100">
+                  <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-gray-100 border border-gray-200 rounded-md bg-white">
                     <Bell className="h-5 w-5 text-gray-600" />
                     <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
                   </Button>
@@ -437,7 +459,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </PopoverContent>
               </Popover>
               
-              <div className="flex items-center gap-2 pl-3 border-l border-gray-200">
+              <div className="flex items-center gap-2 px-3 py-1 border border-gray-200 rounded-md bg-white">
                 <div className="h-9 w-9 rounded-full bg-[#6366f1] flex items-center justify-center ring-2 ring-gray-100">
                   <User className="h-5 w-5 text-white" />
                 </div>
@@ -446,6 +468,60 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <p className="text-xs text-gray-500">Admin</p>
                 </div>
               </div>
+            </div>
+          </div>
+          
+          {/* Second Row: Tabs and action buttons */}
+          <div className="flex items-center justify-between px-4 lg:px-6 py-3">
+            <div className="flex items-center gap-1 border border-gray-200 rounded-lg p-1 bg-white">
+              <Link
+                href="/dashboard"
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-all rounded-md ${
+                  pathname === '/dashboard' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Overview
+              </Link>
+              <Link
+                href="/orders"
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-all rounded-md ${
+                  pathname === '/orders' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Order
+              </Link>
+              <Link
+                href="/sales"
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-all rounded-md ${
+                  pathname === '/sales' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                <BarChart3 className="h-4 w-4" />
+                Sales
+              </Link>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="icon" className="h-9 w-9">
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+              <Select defaultValue="monthly">
+                <SelectTrigger className="w-[110px] h-9">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="daily">Daily</SelectItem>
+                  <SelectItem value="weekly">Weekly</SelectItem>
+                  <SelectItem value="monthly">Monthly</SelectItem>
+                  <SelectItem value="yearly">Yearly</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button className="bg-[#6366f1] hover:bg-[#5558e3] h-9">
+                <Download className="mr-2 h-4 w-4" />
+                Download
+              </Button>
             </div>
           </div>
         </header>
