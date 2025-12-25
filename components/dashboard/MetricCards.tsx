@@ -5,48 +5,48 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const metrics = [
   {
-    title: 'MONTHLY REVENUE',
-    value: '$127,854',
-    change: '+18.2%',
+    title: 'NEW NET INCOME',
+    value: '$53,765',
+    change: '10.5%',
     isPositive: true,
-    comparison: '+$19,642',
-    comparisonText: 'vs last month',
+    comparison: '+$2,156',
+    comparisonText: 'from last month',
     icon: DollarSign,
-    iconBg: 'bg-emerald-50',
-    iconColor: 'text-emerald-600',
-  },
-  {
-    title: 'TOTAL SALES',
-    value: '2,847',
-    change: '+12.4%',
-    isPositive: true,
-    comparison: '+315 orders',
-    comparisonText: 'vs last month',
-    icon: ShoppingBag,
-    iconBg: 'bg-blue-50',
-    iconColor: 'text-blue-600',
-  },
-  {
-    title: 'ACTIVE CUSTOMERS',
-    value: '8,432',
-    change: '+8.7%',
-    isPositive: true,
-    comparison: '+674 users',
-    comparisonText: 'vs last month',
-    icon: Users,
-    iconBg: 'bg-purple-50',
+    iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
   },
   {
-    title: 'CONVERSION RATE',
-    value: '3.24%',
-    change: '+0.8%',
+    title: 'AVERAGE SALES',
+    value: '$12,680',
+    change: '3.4%',
     isPositive: true,
-    comparison: '+0.24%',
-    comparisonText: 'vs last month',
+    comparison: '+$2,350',
+    comparisonText: 'from last month',
+    icon: ShoppingBag,
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
+  },
+  {
+    title: 'TOTAL ORDER',
+    value: '11,294',
+    change: '0.5%',
+    isPositive: true,
+    comparison: '+1,450',
+    comparisonText: 'from last month',
+    icon: Users,
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
+  },
+  {
+    title: 'IMPRESSION',
+    value: '456K',
+    change: '10.2%',
+    isPositive: false,
+    comparison: '-89.4K',
+    comparisonText: 'from last month',
     icon: TrendingUp,
-    iconBg: 'bg-pink-50',
-    iconColor: 'text-pink-600',
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
   },
 ];
 
@@ -56,50 +56,50 @@ export default function MetricCards() {
       {metrics.map((metric) => (
         <Card 
           key={metric.title} 
-          className="relative overflow-hidden hover:shadow-md transition-all duration-200 border-gray-200"
+          className="relative overflow-hidden border border-gray-100 bg-gray-50/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
         >
-          <CardContent className="p-5 lg:p-6">
-            <div className="flex items-start justify-between mb-3 lg:mb-4">
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] lg:text-xs font-semibold text-gray-500 tracking-wider mb-1.5 lg:mb-2 uppercase">
+          <CardContent className="p-4">
+            {/* Inner box containing title, icon, value, and badge */}
+            <div className="bg-white border border-gray-100 rounded-xl p-4 mb-4 shadow-sm">
+              {/* Top row: Title and Icon */}
+              <div className="flex items-start justify-between mb-3">
+                <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
                   {metric.title}
                 </p>
-                <h3 className="text-2xl lg:text-3xl font-bold tracking-tight text-gray-900 truncate">
+                <div className={`p-2.5 rounded-lg ${metric.iconBg}`}>
+                  <metric.icon className={`h-5 w-5 ${metric.iconColor}`} strokeWidth={2} />
+                </div>
+              </div>
+
+              {/* Value and badge row */}
+              <div className="flex items-baseline gap-2.5">
+                <h3 className="text-[28px] font-bold text-gray-900 leading-none">
                   {metric.value}
                 </h3>
-              </div>
-              <div className={`p-2.5 lg:p-3 rounded-xl ${metric.iconBg} flex-shrink-0 ml-2`}>
-                <metric.icon className={`h-4 w-4 lg:h-5 lg:w-5 ${metric.iconColor}`} />
+                <span
+                  className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-md ${
+                    metric.isPositive
+                      ? 'bg-cyan-100 text-cyan-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}
+                >
+                  <TrendingUp className={`h-3 w-3 ${metric.isPositive ? '' : 'rotate-180'}`} strokeWidth={2.5} />
+                  {metric.change}
+                </span>
               </div>
             </div>
 
-            <div className="flex items-center mb-3 lg:mb-4">
-              <span
-                className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${
-                  metric.isPositive
-                    ? 'bg-green-50 text-green-700'
-                    : 'bg-red-50 text-red-700'
-                }`}
-              >
-                {metric.isPositive ? (
-                  <TrendingUp className="h-3 w-3" />
-                ) : (
-                  <TrendingDown className="h-3 w-3" />
-                )}
-                {metric.change}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-gray-100">
-              <p className="text-xs lg:text-sm text-gray-600">
+            {/* Outer box content: Comparison text and arrow */}
+            <div className="flex items-center justify-between px-1">
+              <p className="text-sm text-gray-600">
                 <span className="font-semibold text-gray-900">{metric.comparison}</span>{' '}
-                <span className="hidden sm:inline">{metric.comparisonText}</span>
+                <span className="text-gray-500">{metric.comparisonText}</span>
               </p>
               <button 
-                className="text-gray-400 hover:text-[#6366f1] transition-colors flex-shrink-0"
+                className="text-gray-400 hover:text-gray-700 transition-colors"
                 aria-label="View details"
               >
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </button>
             </div>
           </CardContent>
