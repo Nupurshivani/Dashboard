@@ -195,87 +195,44 @@ export default function OrdersPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-gray-900">Orders</h1>
-            <p className="text-sm text-gray-500 mt-1">Manage and track all your orders</p>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Button variant="outline" size="icon" className="h-9 w-9 hover:bg-gray-100">
-              <RefreshCw className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="h-9">
-              <Filter className="mr-2 h-4 w-4" />
-              Filter
-            </Button>
-            <Button className="bg-[#6366f1] hover:bg-[#5558e3] h-9">
-              <Download className="mr-2 h-4 w-4" />
-              Export
-            </Button>
-          </div>
-        </div>
-
-        {/* Tabs Section */}
-        <div className="flex gap-1 border-b border-gray-200">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all relative text-gray-600 hover:text-gray-900"
-          >
-            <BarChart3 className="h-4 w-4" />
-            Overview
-          </Link>
-          <Link
-            href="/orders"
-            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all relative text-[#6366f1]"
-          >
-            <ShoppingCart className="h-4 w-4" />
-            Order
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#6366f1]" />
-          </Link>
-          <Link
-            href="/sales"
-            className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all relative text-gray-600 hover:text-gray-900"
-          >
-            <TrendingUp className="h-4 w-4" />
-            Sales
-          </Link>
-        </div>
-
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {orderStats.map((stat) => (
-            <Card key={stat.title} className="relative overflow-hidden hover:shadow-md transition-all duration-200 border-gray-200">
-              <CardContent className="p-5 lg:p-6">
-                <div className="flex items-start justify-between mb-3 lg:mb-4">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[10px] lg:text-xs font-semibold text-gray-500 tracking-wider mb-1.5 lg:mb-2 uppercase">
+            <Card key={stat.title} className="relative overflow-hidden border border-gray-100 bg-gray-50/30 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+              <CardContent className="p-4">
+                {/* Inner box containing title, icon, value, and badge */}
+                <div className="bg-white border border-gray-100 rounded-xl p-4 mb-4 shadow-sm">
+                  {/* Top row: Title and Icon */}
+                  <div className="flex items-start justify-between mb-3">
+                    <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
                       {stat.title}
                     </p>
-                    <h3 className="text-2xl lg:text-3xl font-bold tracking-tight text-gray-900 truncate">
+                    <div className={`p-2.5 rounded-lg ${stat.iconBg}`}>
+                      <stat.icon className={`h-5 w-5 ${stat.iconColor}`} strokeWidth={2} />
+                    </div>
+                  </div>
+
+                  {/* Value and badge row */}
+                  <div className="flex items-baseline gap-2.5">
+                    <h3 className="text-[28px] font-bold text-gray-900 leading-none">
                       {stat.value}
                     </h3>
-                  </div>
-                  <div className={`p-2.5 lg:p-3 rounded-xl ${stat.iconBg} flex-shrink-0 ml-2`}>
-                    <stat.icon className={`h-4 w-4 lg:h-5 lg:w-5 ${stat.iconColor}`} />
+                    <span
+                      className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-md ${
+                        stat.isPositive ? 'bg-cyan-100 text-cyan-700' : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      <TrendingUp className={`h-3 w-3 ${stat.isPositive ? '' : 'rotate-180'}`} strokeWidth={2.5} />
+                      {stat.change}
+                    </span>
                   </div>
                 </div>
 
-                <div className="flex items-center mb-3 lg:mb-4">
-                  <span
-                    className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${
-                      stat.isPositive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-                    }`}
-                  >
-                    <TrendingUp className="h-3 w-3" />
-                    {stat.change}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between pt-3 lg:pt-4 border-t border-gray-100">
-                  <p className="text-xs lg:text-sm text-gray-600">
+                {/* Outer box content: Comparison text */}
+                <div className="flex items-center justify-between px-1">
+                  <p className="text-sm text-gray-600">
                     <span className="font-semibold text-gray-900">{stat.comparison}</span>{' '}
-                    <span className="hidden sm:inline">{stat.comparisonText}</span>
+                    <span className="text-gray-500">{stat.comparisonText}</span>
                   </p>
                 </div>
               </CardContent>
@@ -284,87 +241,95 @@ export default function OrdersPage() {
         </div>
 
         {/* Orders Table */}
-        <Card className="h-full">
-          <CardHeader className="border-b border-gray-100 pb-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <h3 className="text-base lg:text-lg font-bold text-gray-900">Recent Orders</h3>
-                <p className="text-xs lg:text-sm text-gray-500 mt-1">
-                  Total {orders.length} orders
-                </p>
+        <Card className="h-full bg-gray-50/50 border-gray-200">
+          <CardContent className="p-4 space-y-3">
+            {/* First Inner Box - Header Section */}
+            <div className="bg-white rounded-lg border border-gray-200 p-3 space-y-3">
+              {/* Recent Orders Title Section */}
+              <div className="bg-gray-50 rounded-lg border border-gray-200 p-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                      RECENT ORDERS
+                    </p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xl font-bold text-gray-900">{orders.length}</span>
+                      <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-cyan-100 text-cyan-700">
+                        Total
+                      </span>
+                    </div>
+                  </div>
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="w-[130px] h-8 text-xs border-gray-300">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="processing">Processing</SelectItem>
+                      <SelectItem value="shipped">Shipped</SelectItem>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-[140px] h-9 text-sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="processing">Processing</SelectItem>
-                    <SelectItem value="shipped">Shipped</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                  </SelectContent>
-                </Select>
+
+              {/* Search Bar Section */}
+              <div className="bg-gray-50 rounded-lg border border-gray-200 p-3">
+                <div className="relative">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                  <Input
+                    placeholder="Search orders by ID or customer..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-8 h-8 bg-white border-gray-300 text-xs"
+                  />
+                </div>
               </div>
             </div>
-            <div className="relative mt-4">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search orders by ID or customer..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-9 bg-gray-50 border-gray-200 text-sm"
-              />
-            </div>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-gray-50 hover:bg-gray-50">
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Order ID</TableHead>
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Customer</TableHead>
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Date</TableHead>
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Items</TableHead>
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Total</TableHead>
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Status</TableHead>
-                    <TableHead className="font-semibold text-gray-700 text-xs lg:text-sm">Payment</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {orders.map((order) => (
-                    <TableRow key={order.id} className="hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
-                      <TableCell className="py-3 lg:py-4">
-                        <span className="font-semibold text-xs lg:text-sm text-[#6366f1]">{order.id}</span>
-                      </TableCell>
-                      <TableCell className="py-3 lg:py-4">
-                        <div className="flex items-center gap-2 lg:gap-3">
-                          <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center flex-shrink-0">
-                            <span className="text-white font-semibold text-xs">
-                              {order.customer.split(' ').map(n => n[0]).join('')}
-                            </span>
-                          </div>
-                          <span className="font-semibold text-gray-900 text-xs lg:text-sm">{order.customer}</span>
+
+            {/* Second Inner Box - Table Section */}
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              {/* Table Headers Section */}
+              <div className="bg-gray-50 border-b border-gray-200 px-3 py-2">
+                <div className="grid grid-cols-7 gap-3">
+                  <div className="font-medium text-gray-500 text-xs">Order ID</div>
+                  <div className="font-medium text-gray-500 text-xs">Customer</div>
+                  <div className="font-medium text-gray-500 text-xs">Date</div>
+                  <div className="font-medium text-gray-500 text-xs">Items</div>
+                  <div className="font-medium text-gray-500 text-xs">Total</div>
+                  <div className="font-medium text-gray-500 text-xs">Status</div>
+                  <div className="font-medium text-gray-500 text-xs">Payment</div>
+                </div>
+              </div>
+
+              {/* Table Data Section */}
+              <div className="bg-white">
+                {orders.map((order) => (
+                  <div key={order.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50/50 transition-colors px-3 py-2.5">
+                    <div className="grid grid-cols-7 gap-3 items-center">
+                      <div className="font-semibold text-xs text-[#6366f1]">{order.id}</div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-semibold text-[10px]">
+                            {order.customer.split(' ').map(n => n[0]).join('')}
+                          </span>
                         </div>
-                      </TableCell>
-                      <TableCell className="text-gray-700 text-xs lg:text-sm">
-                        <div className="flex items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5 text-gray-400" />
-                          {order.date}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-gray-900 font-semibold text-xs lg:text-sm">
-                        <div className="flex items-center gap-1.5">
-                          <Package className="h-3.5 w-3.5 text-gray-400" />
-                          {order.items}
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-bold text-gray-900 text-xs lg:text-sm">{order.total}</TableCell>
-                      <TableCell>{getStatusBadge(order.status)}</TableCell>
-                      <TableCell>
-                        <span className={`inline-flex px-2 py-1 rounded-full text-xs font-semibold ${
+                        <span className="font-medium text-gray-900 text-xs truncate">{order.customer}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-gray-700 text-xs">
+                        <Calendar className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                        <span className="truncate">{order.date}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-gray-900 font-medium text-xs">
+                        <Package className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                        {order.items}
+                      </div>
+                      <div className="font-bold text-gray-900 text-xs">{order.total}</div>
+                      <div>{getStatusBadge(order.status)}</div>
+                      <div>
+                        <span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold ${
                           order.payment === 'Paid' 
                             ? 'bg-green-50 text-green-700' 
                             : order.payment === 'Pending'
@@ -373,11 +338,11 @@ export default function OrdersPage() {
                         }`}>
                           {order.payment}
                         </span>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
