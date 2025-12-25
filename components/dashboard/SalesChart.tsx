@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, RefreshCw } from 'lucide-react';
 import {
   Area,
   AreaChart,
@@ -21,15 +21,16 @@ import {
 } from 'recharts';
 
 const monthlyData = [
-  { date: 'Dec 01', current: 95000, previous: 82000 },
-  { date: 'Dec 04', current: 102000, previous: 88000 },
-  { date: 'Dec 07', current: 108000, previous: 91000 },
-  { date: 'Dec 10', current: 115000, previous: 95000 },
-  { date: 'Dec 13', current: 121000, previous: 99000 },
-  { date: 'Dec 16', current: 118000, previous: 103000 },
-  { date: 'Dec 19', current: 125000, previous: 107000 },
-  { date: 'Dec 22', current: 132000, previous: 110000 },
-  { date: 'Dec 24', current: 128000, previous: 108000 },
+  { date: 'Aug 01, 2024', current: 10000, previous: 12000 },
+  { date: 'Aug 05, 2024', current: 15000, previous: 14000 },
+  { date: 'Aug 08, 2024', current: 18000, previous: 15000 },
+  { date: 'Aug 12, 2024', current: 22300, previous: 19000 },
+  { date: 'Aug 15, 2024', current: 20000, previous: 17000 },
+  { date: 'Aug 18, 2024', current: 23000, previous: 18000 },
+  { date: 'Aug 22, 2024', current: 21000, previous: 16000 },
+  { date: 'Aug 25, 2024', current: 19000, previous: 15000 },
+  { date: 'Aug 28, 2024', current: 17000, previous: 14000 },
+  { date: 'Aug 31, 2024', current: 16000, previous: 13000 },
 ];
 
 const yearlyData = [
@@ -49,18 +50,32 @@ const yearlyData = [
 
 const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
+    const currentData = payload.find((p: any) => p.dataKey === 'current');
+    const previousData = payload.find((p: any) => p.dataKey === 'previous');
+    
     return (
-      <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-        <p className="text-sm font-medium mb-2">NET SALES</p>
-        <p className="text-lg font-semibold text-[#6366f1] mb-1">
-          ${(payload[0].value / 1000).toFixed(1)}K
-        </p>
-        <p className="text-xs text-gray-500">{payload[0].payload.date}, 2024</p>
-        {payload[1] && (
-          <p className="text-xs text-orange-500 mt-2">
-            Previous: ${(payload[1].value / 1000).toFixed(1)}K
-          </p>
-        )}
+      <div className="bg-white p-3 rounded-xl shadow-lg border border-gray-200">
+        <p className="text-xs font-semibold text-gray-900 mb-2">NET SALES</p>
+        <div className="space-y-1">
+          {currentData && (
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-purple-500" />
+              <p className="text-sm font-semibold text-gray-900">
+                ${(currentData.value / 1000).toFixed(1)}K
+              </p>
+              <span className="text-xs text-gray-500">— {currentData.payload.date}</span>
+            </div>
+          )}
+          {previousData && (
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-amber-400" />
+              <p className="text-sm font-semibold text-gray-900">
+                ${(previousData.value / 1000).toFixed(1)}K
+              </p>
+              <span className="text-xs text-gray-500">— {previousData.payload.date}</span>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -73,121 +88,118 @@ export default function SalesChart() {
   const [categoryFilter, setCategoryFilter] = useState('all-categories');
 
   const data = period === 'monthly' ? monthlyData : yearlyData;
-  const title = period === 'monthly' ? 'DECEMBER SALES' : '2025 ANNUAL SALES';
-  const totalValue = period === 'monthly' ? '$127,854' : '$1.53M';
-  const changePercent = period === 'monthly' ? '18.2%' : '9.0%';
+  const title = 'OVERALL SALES';
+  const totalValue = '$83,125';
+  const changePercent = '7.7%';
   const dateRange = period === 'monthly' 
-    ? { start: 'Dec 01, 2025', end: 'Dec 24, 2025' }
+    ? { start: 'Aug 01, 2024', end: 'Aug 31, 2024' }
     : { start: 'Jan 2025', end: 'Dec 2025' };
 
   return (
-    <Card className="h-full">
-      <CardHeader className="border-b border-gray-100 pb-4">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div>
-            <h3 className="text-[10px] lg:text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-              {title}
-            </h3>
-            <div className="flex items-baseline gap-2 lg:gap-3">
-              <span className="text-2xl lg:text-3xl font-bold text-gray-900">{totalValue}</span>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full bg-green-50 text-green-700">
-                <TrendingUp className="h-3 w-3" />
-                {changePercent}
-              </span>
+    <Card className="h-full border border-gray-100 bg-gray-50/30 rounded-2xl shadow-sm">
+      <CardContent className="p-4 space-y-4">
+        {/* First inner box - Header with title, value, and filters */}
+        <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
+          {/* Top section - Title, value, and icon */}
+          <div className="p-5 flex items-start justify-between border-b border-gray-100">
+            <div>
+              <h3 className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2.5">
+                {title}
+              </h3>
+              <div className="flex items-baseline gap-2.5">
+                <span className="text-[32px] font-bold text-gray-900 leading-none">{totalValue}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">
+                  <TrendingUp className="h-3 w-3" strokeWidth={2.5} />
+                  {changePercent}
+                </span>
+              </div>
+            </div>
+            <button className="p-2 hover:bg-gray-50 rounded-lg transition-colors">
+              <RefreshCw className="h-4 w-4 text-purple-500" strokeWidth={2} />
+            </button>
+          </div>
+          
+          {/* Bottom section - Filters and legend */}
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Select value={productFilter} onValueChange={setProductFilter}>
+                <SelectTrigger className="h-8 px-3 rounded-full bg-gray-50 border-gray-200 text-sm font-medium">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all-products">All Products</SelectItem>
+                  <SelectItem value="electronics">Electronics</SelectItem>
+                  <SelectItem value="clothing">Clothing</SelectItem>
+                  <SelectItem value="food">Food</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger className="h-8 px-3 rounded-full bg-gray-50 border-gray-200 text-sm font-medium">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all-categories">All Categories</SelectItem>
+                  <SelectItem value="category-1">Category 1</SelectItem>
+                  <SelectItem value="category-2">Category 2</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-purple-500" />
+                <span className="text-xs text-gray-600 font-medium">This period</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-amber-400" />
+                <span className="text-xs text-gray-600 font-medium">Last period</span>
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2 lg:gap-3">
-            <Select value={period} onValueChange={(value: 'monthly' | 'yearly') => setPeriod(value)}>
-              <SelectTrigger className="w-[120px] lg:w-[130px] h-9 text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="yearly">Yearly</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={productFilter} onValueChange={setProductFilter}>
-              <SelectTrigger className="w-[140px] lg:w-[150px] h-9 text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all-products">All Products</SelectItem>
-                <SelectItem value="electronics">Electronics</SelectItem>
-                <SelectItem value="clothing">Clothing</SelectItem>
-                <SelectItem value="food">Food</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger className="w-[140px] lg:w-[150px] h-9 text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all-categories">All Categories</SelectItem>
-                <SelectItem value="category-1">Category 1</SelectItem>
-                <SelectItem value="category-2">Category 2</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
-        <div className="flex items-center gap-4 lg:gap-6 mt-3 lg:mt-4">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 lg:w-3 lg:h-3 rounded-full bg-[#6366f1]" />
-            <span className="text-xs lg:text-sm text-gray-600 font-medium">This period</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 lg:w-3 lg:h-3 rounded-full bg-orange-400" />
-            <span className="text-xs lg:text-sm text-gray-600 font-medium">Last period</span>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="p-4 lg:p-6">
-        <ResponsiveContainer width="100%" height={280} className="lg:h-[320px]">
-          <AreaChart data={data}>
-            <defs>
-              <linearGradient id="colorCurrent" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorPrevious" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#fb923c" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#fb923c" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
-            <XAxis
-              dataKey="date"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: '#9ca3af', fontSize: 12 }}
-              dy={10}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: '#9ca3af', fontSize: 12 }}
-              tickFormatter={(value) => `$${value / 1000}K`}
-              dx={-10}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="monotone"
-              dataKey="previous"
-              stroke="#fb923c"
-              strokeWidth={2}
-              fill="url(#colorPrevious)"
-            />
-            <Area
-              type="monotone"
-              dataKey="current"
-              stroke="#6366f1"
-              strokeWidth={2}
-              fill="url(#colorCurrent)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-        <div className="flex justify-between text-xs text-gray-500 mt-2 px-4">
-          <span>{dateRange.start}</span>
-          <span>{dateRange.end}</span>
+
+        {/* Second inner box - Chart */}
+        <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={data}>
+              <defs>
+                <linearGradient id="colorCurrent" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={true} horizontal={false} />
+              <XAxis
+                dataKey="date"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#9ca3af', fontSize: 11 }}
+                dy={8}
+              />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#9ca3af', fontSize: 11 }}
+                tickFormatter={(value) => `$${value / 1000}K`}
+                dx={-8}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Area
+                type="monotone"
+                dataKey="previous"
+                stroke="#fbbf24"
+                strokeWidth={2.5}
+                fill="transparent"
+              />
+              <Area
+                type="monotone"
+                dataKey="current"
+                stroke="#8b5cf6"
+                strokeWidth={2.5}
+                fill="url(#colorCurrent)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       </CardContent>
     </Card>
