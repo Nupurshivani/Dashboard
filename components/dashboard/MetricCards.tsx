@@ -11,7 +11,14 @@ const metrics = [
     isPositive: true,
     comparison: '+$2,156',
     comparisonText: 'from last month',
-    icon: DollarSign,
+    icon: () => (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="12" cy="8" rx="7" ry="3" stroke="currentColor" strokeWidth="2"/>
+        <path d="M5 8V12C5 13.657 8.134 15 12 15C15.866 15 19 13.657 19 12V8" stroke="currentColor" strokeWidth="2"/>
+        <path d="M5 12V16C5 17.657 8.134 19 12 19C15.866 19 19 17.657 19 16V12" stroke="currentColor" strokeWidth="2"/>
+        <circle cx="8" cy="17" r="2.5" fill="currentColor" opacity="0.3"/>
+      </svg>
+    ),
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
   },
@@ -22,9 +29,16 @@ const metrics = [
     isPositive: true,
     comparison: '+$2,350',
     comparisonText: 'from last month',
-    icon: ShoppingBag,
-    iconBg: 'bg-blue-100',
-    iconColor: 'text-blue-600',
+    icon: () => (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" strokeWidth="2"/>
+        <rect x="8" y="14" width="2" height="4" fill="currentColor"/>
+        <rect x="11" y="11" width="2" height="7" fill="currentColor"/>
+        <rect x="14" y="9" width="2" height="9" fill="currentColor"/>
+      </svg>
+    ),
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
   },
   {
     title: 'TOTAL ORDER',
@@ -33,7 +47,16 @@ const metrics = [
     isPositive: true,
     comparison: '+1,450',
     comparisonText: 'from last month',
-    icon: Users,
+    icon: () => (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 2L3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6L18 2H6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M3 6H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="9" cy="12" r="0.8" fill="currentColor"/>
+        <circle cx="15" cy="12" r="0.8" fill="currentColor"/>
+        <path d="M9.5 14C9.5 14 10.5 15 12 15C13.5 15 14.5 14 14.5 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
   },
@@ -44,7 +67,13 @@ const metrics = [
     isPositive: false,
     comparison: '-89.4K',
     comparisonText: 'from last month',
-    icon: TrendingUp,
+    icon: () => (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+      </svg>
+    ),
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
   },
@@ -67,7 +96,13 @@ export default function MetricCards() {
                   {metric.title}
                 </p>
                 <div className={`p-2.5 rounded-lg ${metric.iconBg}`}>
-                  <metric.icon className={`h-5 w-5 ${metric.iconColor}`} strokeWidth={2} />
+                  {typeof metric.icon === 'function' ? (
+                    <div className={metric.iconColor}>
+                      <metric.icon />
+                    </div>
+                  ) : (
+                    <metric.icon className={`h-5 w-5 ${metric.iconColor}`} strokeWidth={2} />
+                  )}
                 </div>
               </div>
 
