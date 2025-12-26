@@ -30,7 +30,16 @@ export default function ConversionRate() {
               </div>
             </div>
             <div className="p-2.5 rounded-lg bg-purple-100 flex-shrink-0">
-              <BarChart3 className="h-5 w-5 text-purple-600" strokeWidth={2} />
+              <svg className="h-5 w-5 text-purple-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 3L8 3L8 21L3 21L3 3Z" fill="currentColor" opacity="0.3"/>
+                <path d="M10 8L15 8L15 21L10 21L10 8Z" fill="currentColor" opacity="0.5"/>
+                <path d="M17 13L22 13L22 21L17 21L17 13Z" fill="currentColor" opacity="0.7"/>
+                <path d="M3 3L22 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                <circle cx="15" cy="3" r="1.5" fill="currentColor"/>
+                <circle cx="22" cy="3" r="1.5" fill="currentColor"/>
+                <path d="M8 3L15 3L22 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
             </div>
           </div>
         </div>
@@ -39,21 +48,13 @@ export default function ConversionRate() {
         <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
           <div className="space-y-4">
             {conversionData.map((item) => (
-              <div key={item.label}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                  <span className="text-sm font-bold text-gray-900">{item.value.toLocaleString()}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${item.color} rounded-full transition-all duration-500`}
-                      style={{ width: `${item.percentage * 6.5}%` }}
-                    />
+              <div key={item.label} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-gray-900 mb-1">{item.label}</div>
+                    <div className="text-xs text-gray-500">{item.percentage}%</div>
                   </div>
-                  <span className="text-xs font-semibold text-gray-600 w-10 text-right">
-                    {item.percentage}%
-                  </span>
+                  <div className="text-sm font-bold text-gray-900">{item.value.toLocaleString()}</div>
                 </div>
               </div>
             ))}
