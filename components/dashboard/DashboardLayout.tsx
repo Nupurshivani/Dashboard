@@ -129,15 +129,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center justify-between p-5 lg:p-6 border-b border-gray-200">
             {!sidebarCollapsed && (
               <Link href="/" className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center shadow-sm">
-                  <span className="text-white font-bold text-base">M</span>
+                <div className="w-8 h-8 rounded-full bg-[#7C3AED] flex items-center justify-center shadow-sm relative">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2.5"/>
+                    <path d="M8 12 L12 8 L16 12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </div>
                 <span className="text-xl font-bold text-gray-900">Metoric</span>
               </Link>
             )}
             {sidebarCollapsed && (
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center shadow-sm mx-auto">
-                <span className="text-white font-bold text-base">M</span>
+              <div className="w-8 h-8 rounded-full bg-[#7C3AED] flex items-center justify-center shadow-sm mx-auto relative">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2.5"/>
+                  <path d="M8 12 L12 8 L16 12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </div>
             )}
             <button
@@ -291,8 +297,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               {/* Messages Popover */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-gray-100 border border-gray-200 rounded-md bg-white">
-                    <Mail className="h-5 w-5 text-gray-600" />
+                  <Button variant="ghost" size="icon" className="relative h-10 w-10 hover:bg-gray-50 border border-gray-200 rounded-xl bg-white">
+                    <Mail className="h-5 w-5 text-gray-700" />
                     <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-blue-600 hover:bg-blue-600 text-[10px]">
                       3
                     </Badge>
@@ -377,8 +383,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               {/* Notifications Popover */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon" className="relative h-9 w-9 hover:bg-gray-100 border border-gray-200 rounded-md bg-white">
-                    <Bell className="h-5 w-5 text-gray-600" />
+                  <Button variant="ghost" size="icon" className="relative h-10 w-10 hover:bg-gray-50 border border-gray-200 rounded-xl bg-white">
+                    <Bell className="h-5 w-5 text-gray-700" />
                     <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
                   </Button>
                 </PopoverTrigger>
@@ -459,15 +465,60 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </PopoverContent>
               </Popover>
               
-              <div className="flex items-center gap-2 px-3 py-1 border border-gray-200 rounded-md bg-white">
-                <div className="h-9 w-9 rounded-full bg-[#6366f1] flex items-center justify-center ring-2 ring-gray-100">
-                  <User className="h-5 w-5 text-white" />
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-semibold text-gray-900">John Doe</p>
-                  <p className="text-xs text-gray-500">Admin</p>
-                </div>
-              </div>
+              {/* Profile Dropdown */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2 h-10 px-3 hover:bg-gray-50 border border-gray-200 rounded-xl bg-white">
+                    <div className="h-7 w-7 rounded-full bg-gray-100 flex items-center justify-center">
+                      <User className="h-4 w-4 text-gray-600" />
+                    </div>
+                    <svg className="h-4 w-4 text-gray-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-56 p-0" align="end">
+                  <div className="p-3 border-b">
+                    <p className="text-sm font-semibold text-gray-900">John Doe</p>
+                    <p className="text-xs text-gray-500">Admin</p>
+                  </div>
+                  <div className="p-1">
+                    <Button variant="ghost" className="w-full justify-start h-9 text-sm">
+                      Profile Settings
+                    </Button>
+                    <Button variant="ghost" className="w-full justify-start h-9 text-sm">
+                      Account
+                    </Button>
+                    <Button variant="ghost" className="w-full justify-start h-9 text-sm text-red-600 hover:text-red-700 hover:bg-red-50">
+                      Logout
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+
+              {/* More Menu */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-10 w-10 hover:bg-gray-50 border border-gray-200 rounded-xl bg-white">
+                    <svg className="h-5 w-5 text-gray-700" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="5" r="1.5" fill="currentColor"/>
+                      <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                      <circle cx="12" cy="19" r="1.5" fill="currentColor"/>
+                    </svg>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-48 p-1" align="end">
+                  <Button variant="ghost" className="w-full justify-start h-9 text-sm">
+                    Settings
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start h-9 text-sm">
+                    Help & Support
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start h-9 text-sm">
+                    Keyboard Shortcuts
+                  </Button>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           
@@ -480,7 +531,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   pathname === '/dashboard' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
-                <LayoutDashboard className="h-4 w-4" />
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="2"/>
+                  <rect x="3" y="3" width="7" height="18" rx="3" fill="currentColor" opacity="0.2"/>
+                  <line x1="10" y1="3" x2="10" y2="21" stroke="currentColor" strokeWidth="2"/>
+                </svg>
                 Overview
               </Link>
               <Link
@@ -489,7 +544,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   pathname === '/orders' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
-                <ShoppingCart className="h-4 w-4" />
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="12" y="2" width="2" height="5" rx="1" fill="currentColor"/>
+                  <rect x="16.5" y="4" width="2" height="4" rx="1" fill="currentColor" opacity="0.875" transform="rotate(45 17.5 6)"/>
+                  <rect x="19" y="10" width="2" height="4" rx="1" fill="currentColor" opacity="0.75" transform="rotate(90 20 12)"/>
+                  <rect x="17.5" y="16" width="2" height="4" rx="1" fill="currentColor" opacity="0.625" transform="rotate(135 18.5 18)"/>
+                  <rect x="12" y="17" width="2" height="5" rx="1" fill="currentColor" opacity="0.5"/>
+                  <rect x="5.5" y="16" width="2" height="4" rx="1" fill="currentColor" opacity="0.375" transform="rotate(-135 6.5 18)"/>
+                  <rect x="3" y="10" width="2" height="4" rx="1" fill="currentColor" opacity="0.25" transform="rotate(-90 4 12)"/>
+                  <rect x="5.5" y="4" width="2" height="4" rx="1" fill="currentColor" opacity="0.125" transform="rotate(-45 6.5 6)"/>
+                </svg>
                 Order
               </Link>
               <Link
@@ -498,7 +562,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   pathname === '/sales' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
-                <BarChart3 className="h-4 w-4" />
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 17L9 11L13 15L21 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M16 7H21V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
                 Sales
               </Link>
             </div>
@@ -508,7 +575,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <RefreshCw className="h-4 w-4" />
               </Button>
               <Select defaultValue="monthly">
-                <SelectTrigger className="w-[110px] h-9">
+                <SelectTrigger className="w-[130px] h-10 rounded-xl border-gray-200 bg-white hover:bg-gray-50">
+                  <Calendar className="h-4 w-4 mr-2 text-gray-700" />
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -518,7 +586,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <SelectItem value="yearly">Yearly</SelectItem>
                 </SelectContent>
               </Select>
-              <Button className="bg-[#6366f1] hover:bg-[#5558e3] h-9">
+              <Button className="bg-[#6366f1] hover:bg-[#5558e3] h-10 rounded-xl">
                 <Download className="mr-2 h-4 w-4" />
                 Download
               </Button>
