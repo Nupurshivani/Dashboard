@@ -114,9 +114,19 @@ export default function SalesChart() {
                 </span>
               </div>
             </div>
-            <button className="p-2 hover:bg-gray-50 rounded-lg transition-colors">
-              <RefreshCw className="h-4 w-4 text-purple-500" strokeWidth={2} />
-            </button>
+            <div className="p-3 bg-purple-100 rounded-xl">
+              <svg className="h-6 w-6 text-purple-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Piggy bank body - solid fill */}
+                <path d="M19 13C19 13 19.5 12.5 20 12C20.5 11.5 20.5 11 20 11C19.5 11 19 11.5 19 11.5M19 11.5C19 9.5 17 8 14 8H10C7 8 5 9.5 5 11.5C5 11.5 4.5 11 4 11C3.5 11 3.5 11.5 4 12C4.5 12.5 5 13 5 13M5 13V15C5 17.21 7.79 19 11 19H13C16.21 19 19 17.21 19 15V13M8 19V21M11 19V21M13 19V21M16 19V21" fill="currentColor"/>
+                {/* Snout */}
+                <ellipse cx="17.5" cy="13.5" rx="1.5" ry="1.2" fill="#fff" opacity="0.3"/>
+                {/* Ear */}
+                <path d="M6 10C5.5 9.5 5 9 5 8C5 7.5 5.3 7 6 7.5" fill="currentColor"/>
+                {/* Coin with dollar sign */}
+                <circle cx="12" cy="4" r="3" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                <text x="12" y="5.5" fontSize="4" fill="currentColor" textAnchor="middle" fontWeight="bold">$</text>
+              </svg>
+            </div>
           </div>
           
           {/* Bottom section - Filters and legend */}
