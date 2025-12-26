@@ -49,7 +49,7 @@ const salesMetrics = [
     comparison: '+$275K',
     comparisonText: 'vs last quarter',
     icon: DollarSign,
-    iconBg: 'bg-emerald-50',
+    iconBg: 'bg-white',
     iconColor: 'text-emerald-600',
   },
   {
@@ -60,7 +60,7 @@ const salesMetrics = [
     comparison: '+1,298 sales',
     comparisonText: 'vs last quarter',
     icon: ShoppingBag,
-    iconBg: 'bg-blue-50',
+    iconBg: 'bg-white',
     iconColor: 'text-blue-600',
   },
   {
@@ -71,7 +71,7 @@ const salesMetrics = [
     comparison: '+$7.08',
     comparisonText: 'vs last quarter',
     icon: Target,
-    iconBg: 'bg-purple-50',
+    iconBg: 'bg-white',
     iconColor: 'text-purple-600',
   },
   {
@@ -82,7 +82,7 @@ const salesMetrics = [
     comparison: '+853 users',
     comparisonText: 'vs last quarter',
     icon: Users,
-    iconBg: 'bg-pink-50',
+    iconBg: 'bg-white',
     iconColor: 'text-pink-600',
   },
 ];
@@ -155,14 +155,14 @@ export default function SalesPage() {
                     <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
                       {metric.title}
                     </p>
-                    <div className={`p-2.5 rounded-lg ${metric.iconBg}`}>
+                    <div className={`p-2.5 rounded-lg border border-gray-200 ${metric.iconBg}`}>
                       <metric.icon className={`h-5 w-5 ${metric.iconColor}`} strokeWidth={2} />
                     </div>
                   </div>
 
                   {/* Value and badge row */}
                   <div className="flex items-baseline gap-2.5">
-                    <h3 className="text-[28px] font-bold text-gray-900 leading-none">
+                    <h3 className="text-[18px] font-bold text-gray-900 leading-none">
                       {metric.value}
                     </h3>
                     <span
@@ -202,7 +202,7 @@ export default function SalesPage() {
                         DECEMBER REVENUE
                       </h3>
                       <div className="flex items-baseline gap-2.5">
-                        <span className="text-[32px] font-bold text-gray-900 leading-none">$158,000</span>
+                        <span className="text-[18px] font-bold text-gray-900 leading-none">$158,000</span>
                         <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">
                           <TrendingUp className="h-3 w-3" strokeWidth={2.5} />
                           6.8%
@@ -288,14 +288,14 @@ export default function SalesPage() {
                         SALES BY CATEGORY
                       </h3>
                       <div className="flex items-baseline gap-2.5">
-                        <span className="text-[28px] font-bold text-gray-900 leading-none">$1.48M</span>
+                        <span className="text-[18px] font-bold text-gray-900 leading-none">$1.48M</span>
                         <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-md bg-cyan-100 text-cyan-700">
                           <TrendingUp className="h-3 w-3" strokeWidth={2.5} />
                           22.8%
                         </span>
                       </div>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-purple-100 flex-shrink-0">
+                    <div className="p-2.5 rounded-lg bg-white border border-gray-200 flex-shrink-0">
                       <BarChart3 className="h-5 w-5 text-purple-600" strokeWidth={2} />
                     </div>
                   </div>
@@ -305,30 +305,13 @@ export default function SalesPage() {
                 <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                   <div className="space-y-4">
                     {categoryData.map((category) => (
-                      <div key={category.name}>
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <div
-                              className="w-2 h-2 rounded-full"
-                              style={{ backgroundColor: category.color }}
-                            />
-                            <span className="text-sm font-medium text-gray-700">{category.name}</span>
+                      <div key={category.name} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <div className="text-sm font-medium text-gray-900 mb-1">{category.name}</div>
+                            <div className="text-xs text-gray-500">{category.value}%</div>
                           </div>
-                          <span className="text-sm font-bold text-gray-900">${(category.amount / 1000).toFixed(0)}K</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                            <div
-                              className="h-full rounded-full transition-all duration-500"
-                              style={{
-                                width: `${category.value}%`,
-                                backgroundColor: category.color,
-                              }}
-                            />
-                          </div>
-                          <span className="text-xs font-semibold text-gray-600 w-10 text-right">
-                            {category.value}%
-                          </span>
+                          <div className="text-sm font-bold text-gray-900">${(category.amount / 1000).toFixed(0)}K</div>
                         </div>
                       </div>
                     ))}

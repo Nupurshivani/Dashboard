@@ -47,7 +47,7 @@ const orderStats = [
     comparison: '+315 orders',
     comparisonText: 'vs last month',
     icon: ShoppingCart,
-    iconBg: 'bg-blue-50',
+    iconBg: 'bg-white',
     iconColor: 'text-blue-600',
   },
   {
@@ -58,7 +58,7 @@ const orderStats = [
     comparison: '-13 orders',
     comparisonText: 'vs last week',
     icon: Clock,
-    iconBg: 'bg-orange-50',
+    iconBg: 'bg-white',
     iconColor: 'text-orange-600',
   },
   {
@@ -69,7 +69,7 @@ const orderStats = [
     comparison: '+327 orders',
     comparisonText: 'vs last month',
     icon: CheckCircle2,
-    iconBg: 'bg-green-50',
+    iconBg: 'bg-white',
     iconColor: 'text-green-600',
   },
   {
@@ -80,7 +80,7 @@ const orderStats = [
     comparison: '+$19.6K',
     comparisonText: 'vs last month',
     icon: DollarSign,
-    iconBg: 'bg-purple-50',
+    iconBg: 'bg-white',
     iconColor: 'text-purple-600',
   },
 ];
@@ -207,14 +207,14 @@ export default function OrdersPage() {
                     <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
                       {stat.title}
                     </p>
-                    <div className={`p-2.5 rounded-lg ${stat.iconBg}`}>
+                    <div className={`p-2.5 rounded-lg border border-gray-200 ${stat.iconBg}`}>
                       <stat.icon className={`h-5 w-5 ${stat.iconColor}`} strokeWidth={2} />
                     </div>
                   </div>
 
                   {/* Value and badge row */}
                   <div className="flex items-baseline gap-2.5">
-                    <h3 className="text-[28px] font-bold text-gray-900 leading-none">
+                    <h3 className="text-[18px] font-bold text-gray-900 leading-none">
                       {stat.value}
                     </h3>
                     <span

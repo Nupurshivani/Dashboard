@@ -107,14 +107,14 @@ export default function SalesChart() {
                 {title}
               </h3>
               <div className="flex items-baseline gap-2.5">
-                <span className="text-[32px] font-bold text-gray-900 leading-none">{totalValue}</span>
+                <span className="text-[18px] font-bold text-gray-900 leading-none">{totalValue}</span>
                 <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">
                   <TrendingUp className="h-3 w-3" strokeWidth={2.5} />
                   {changePercent}
                 </span>
               </div>
             </div>
-            <div className="p-3 bg-purple-100 rounded-xl">
+            <div className="p-3 bg-white border border-gray-200 rounded-xl">
               <svg className="h-6 w-6 text-purple-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 {/* Piggy bank body - solid fill */}
                 <path d="M19 13C19 13 19.5 12.5 20 12C20.5 11.5 20.5 11 20 11C19.5 11 19 11.5 19 11.5M19 11.5C19 9.5 17 8 14 8H10C7 8 5 9.5 5 11.5C5 11.5 4.5 11 4 11C3.5 11 3.5 11.5 4 12C4.5 12.5 5 13 5 13M5 13V15C5 17.21 7.79 19 11 19H13C16.21 19 19 17.21 19 15V13M8 19V21M11 19V21M13 19V21M16 19V21" fill="currentColor"/>

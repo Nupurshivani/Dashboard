@@ -3,7 +3,19 @@
 import { TrendingUp, TrendingDown, DollarSign, ShoppingBag, Users, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
-const metrics = [
+type MetricType = {
+  title: string;
+  value: string;
+  change: string;
+  isPositive: boolean;
+  comparison: string;
+  comparisonText: string;
+  icon: () => JSX.Element;
+  iconBg: string;
+  iconColor: string;
+};
+
+const metrics: MetricType[] = [
   {
     title: 'NEW NET INCOME',
     value: '$53,765',
@@ -19,7 +31,7 @@ const metrics = [
         <circle cx="8" cy="17" r="2.5" fill="currentColor" opacity="0.3"/>
       </svg>
     ),
-    iconBg: 'bg-purple-100',
+    iconBg: 'bg-white',
     iconColor: 'text-purple-600',
   },
   {
@@ -37,7 +49,7 @@ const metrics = [
         <rect x="14" y="9" width="2" height="9" fill="currentColor"/>
       </svg>
     ),
-    iconBg: 'bg-purple-100',
+    iconBg: 'bg-white',
     iconColor: 'text-purple-600',
   },
   {
@@ -57,7 +69,7 @@ const metrics = [
         <path d="M9.5 14C9.5 14 10.5 15 12 15C13.5 15 14.5 14 14.5 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
     ),
-    iconBg: 'bg-purple-100',
+    iconBg: 'bg-white',
     iconColor: 'text-purple-600',
   },
   {
@@ -74,7 +86,7 @@ const metrics = [
         <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
       </svg>
     ),
-    iconBg: 'bg-purple-100',
+    iconBg: 'bg-white',
     iconColor: 'text-purple-600',
   },
 ];
@@ -95,20 +107,16 @@ export default function MetricCards() {
                 <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wide">
                   {metric.title}
                 </p>
-                <div className={`p-2.5 rounded-lg ${metric.iconBg}`}>
-                  {typeof metric.icon === 'function' ? (
-                    <div className={metric.iconColor}>
-                      <metric.icon />
-                    </div>
-                  ) : (
-                    <metric.icon className={`h-5 w-5 ${metric.iconColor}`} strokeWidth={2} />
-                  )}
+                <div className={`p-2.5 rounded-lg border border-gray-200 ${metric.iconBg}`}>
+                  <div className={metric.iconColor}>
+                    <metric.icon />
+                  </div>
                 </div>
               </div>
 
               {/* Value and badge row */}
               <div className="flex items-baseline gap-2.5">
-                <h3 className="text-[28px] font-bold text-gray-900 leading-none">
+                <h3 className="text-[15px] font-bold text-gray-900 leading-none">
                   {metric.value}
                 </h3>
                 <span

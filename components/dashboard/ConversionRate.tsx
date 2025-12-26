@@ -22,14 +22,14 @@ export default function ConversionRate() {
                 CONVERSION RATE
               </h3>
               <div className="flex items-baseline gap-2.5">
-                <span className="text-[28px] font-bold text-gray-900 leading-none">4.55%</span>
+                <span className="text-[18px] font-bold text-gray-900 leading-none">4.55%</span>
                 <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-md bg-cyan-100 text-cyan-700">
                   <TrendingUp className="h-3 w-3" strokeWidth={2.5} />
                   6.8%
                 </span>
               </div>
             </div>
-            <div className="p-2.5 rounded-lg bg-purple-100 flex-shrink-0">
+            <div className="p-2.5 rounded-lg bg-white border border-gray-200 flex-shrink-0">
               <svg className="h-5 w-5 text-purple-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 3L8 3L8 21L3 21L3 3Z" fill="currentColor" opacity="0.3"/>
                 <path d="M10 8L15 8L15 21L10 21L10 8Z" fill="currentColor" opacity="0.5"/>
